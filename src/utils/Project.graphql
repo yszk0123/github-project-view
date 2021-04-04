@@ -1,0 +1,70 @@
+query Project($org: String!, $projectNumber: Int!) {
+  organization(login: $org) {
+    id
+    projectNext(number: $projectNumber) {
+      items(first: 10) {
+        totalCount
+        edges {
+          cursor
+          node {
+            __typename
+            title
+            id
+            type
+            fieldValues(first: 10) {
+              nodes {
+                id
+                value
+                projectField {
+                  name
+                }
+              }
+            }
+            content {
+              __typename
+              ... on PullRequest {
+                id
+                title
+                assignees(first: 5) {
+                  nodes {
+                    login
+                  }
+                }
+                labels(first: 5) {
+                  nodes {
+                    name
+                  }
+                }
+                url
+              }
+              ... on Issue {
+                id
+                title
+                assignees(first: 5) {
+                  nodes {
+                    login
+                  }
+                }
+                labels(first: 5) {
+                  nodes {
+                    name
+                  }
+                }
+                url
+              }
+              ... on DraftIssue {
+                id
+                title
+                assignees(first: 5) {
+                  nodes {
+                    login
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
